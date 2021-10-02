@@ -1,14 +1,33 @@
-import { defineComponent, h } from '@vue/runtime-core'
-import Circle from './components/Circle'
+import { defineComponent, h, computed, ref } from '@vue/runtime-core'
+import StartPage from './pages/StartPage'
+import GamePage from './pages/GamePage'
 
 // defineeComponent 可以显示参数提示
 export default defineComponent({
-  render() {
-    const vnode = h("rect", { x: 100, y: 100 }, [
-      "hello",
-      h(Circle)
+  setup(props, ctx) {
+    const currentPageName = ref("StartPage");
+
+    const currentPage = computed(() => {
+      if (currentPageName.value === "StartPage") {
+        return StartPage
+      } else if (currentPageName.value === "GamePage") {
+        return GamePage
+      }
+    })
+
+    return {
+      currentPageName,
+      currentPage
+    }
+  },
+  render(ctx) {
+    const vnode = h("Container", [
+      h(ctx.currentPage, {
+        onChangePage(page) {
+          ctx.currentPageName = page
+        }
+      })
     ])
-    console.log(vnode)
     return vnode    
   }
 })

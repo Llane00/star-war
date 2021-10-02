@@ -3,22 +3,24 @@ import {
 } from "@vue/runtime-core";
 import {
   Graphics,
-  Text
+  Text,
+  Container,
+  Sprite,
+  Texture
 } from "pixi.js"
 
 const renderer = createRenderer({
   createElement(type) {
     let element;
-    if (type === "rect") {
-      element = new Graphics();
-      element.beginFill(0xff0000);
-      element.drawRect(0, 0, 500, 500);
-      element.endFill;
-    } else if (type === "circle") {
-      element = new Graphics();
-      element.beginFill(0x00ff00);
-      element.drawCircle(0, 0, 50);
-      element.endFill;
+    switch (type) {
+      case "Container":
+        element = new Container();
+        break;
+      case "Sprite":
+        element = new Sprite()
+        break;
+      default:
+        break;
     }
     return element;
   },
@@ -30,10 +32,33 @@ const renderer = createRenderer({
     node.addChild(cText)
   },
   patchProp(el, key, preValue, nextValue) {
-    el[key] = nextValue
+    switch (key) {
+      case "texture":
+        el.texture = Texture.from(nextValue);
+        break;
+      case "onClick":
+        el.on("pointertap", nextValue)  
+        break;
+      default:
+        el[key] = nextValue;
+        break;
+    }
   },
   insert(el, parent) {
     parent.addChild(el)
+  },
+  // 处理注解
+  createComment() { },
+  // 获取父节点
+  parentNode() { },
+  // 获取兄弟节点
+  nextSibling() { },
+  // 删除节点时调用
+  remove(el) {
+    const parent = el.parent;
+    if (parent) {
+      parent.removeChild(el)
+    }
   }
 });
 
