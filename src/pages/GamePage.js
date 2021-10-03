@@ -1,22 +1,48 @@
-import { defineComponent, h } from "@vue/runtime-core";
+import { defineComponent, h, reactive } from "@vue/runtime-core";
 import Map from "../components/Map"
+import Hero from "../components/Hero"
 
 export default defineComponent({
   setup(props, ctx) {
-    const onClick = () => {
-      ctx.emit("changePage", "111")
-    }
+    //创建主角飞机
+    const { heroInfo } = useHeroPlane()
 
     return {
-      onClick
+      heroInfo
     }
   },
   render(ctx) {
     return h("Container", [
-      // "star war",
-      // "start game"
-      // h("Sprite", {texture: background0Img, x: 0, y: 0, width: 320, height: 692.9}),
-      h(Map)
+      h(Map),
+      h(Hero, {x: ctx.heroInfo.x, y: ctx.heroInfo.y})
     ])
-  }
+  },
 })
+
+function useHeroPlane() {
+  const speed = 15;
+  const heroInfo = reactive({ x: 100, y: 200 });
+
+  window.addEventListener("keydown", (e) => {
+    console.log(e, heroInfo);
+    switch (e.code) {
+      case "ArrowUp":
+        heroInfo.y -= speed;
+        break;
+      case "ArrowDown":
+        heroInfo.y += speed;
+        break;
+      case "ArrowLeft":
+        heroInfo.x -= speed;
+        break;
+      case "ArrowRight":
+        heroInfo.x += speed;
+      default:
+        break;
+    }
+  })
+
+  return {
+    heroInfo
+  }
+}
