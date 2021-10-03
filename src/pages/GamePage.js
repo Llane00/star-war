@@ -1,5 +1,5 @@
 import { defineComponent, h } from "@vue/runtime-core";
-import background1Img from "../../assets/background_1.jpeg";
+import Map from "../components/Map"
 
 export default defineComponent({
   setup(props, ctx) {
@@ -16,14 +16,7 @@ export default defineComponent({
       // "star war",
       // "start game"
       // h("Sprite", {texture: background0Img, x: 0, y: 0, width: 320, height: 692.9}),
-      h("Sprite", {
-        texture: background1Img,
-        x: 0,
-        y: 0,
-        width: 375,
-        height: 812,
-        interactive: true
-      })
+      h(Map)
     ])
   }
 })
