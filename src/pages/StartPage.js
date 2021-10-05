@@ -19,10 +19,10 @@ export default defineComponent({
       // h("Sprite", {texture: background0Img, x: 0, y: 0, width: 320, height: 692.9}),
       h("Sprite", {
         texture: startImg,
-        x: 12.5,
+        x: 0,
         y: 200,
-        width: 320,
-        height: 160,
+        width: 750,
+        height: 375,
         interactive: true,
         onClick: ctx.onClick
       })

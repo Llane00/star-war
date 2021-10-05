@@ -1,6 +1,7 @@
 import { defineComponent, h, computed, ref } from '@vue/runtime-core'
 import StartPage from './pages/StartPage'
 import GamePage from './pages/GamePage'
+import EndPage from './pages/EndPage'
 
 // defineeComponent 可以显示参数提示
 export default defineComponent({
@@ -12,6 +13,8 @@ export default defineComponent({
         return StartPage
       } else if (currentPageName.value === "GamePage") {
         return GamePage
+      } else if (currentPageName.value === "EndPage") {
+        return EndPage
       }
     })
 
